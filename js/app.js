@@ -37,8 +37,8 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const cards = $(".deck")
-const moveText = $(".moves")
+const cards = $(".deck") //all the cards are in this list
+const moveText = $(".moves") //where the #moves gets printed
 
 let turn = 0; // this will keep track of 1st vs 2nd card shown
 let moves = 0;  //this will keep track of moves made
@@ -46,6 +46,7 @@ let moves = 0;  //this will keep track of moves made
 
 
 cards.on("click", ".card", function(evt){
+  //when a card is clicked on:
   evt.preventDefault();
   let card = $(evt.target);
   card.addClass("open show")
@@ -53,27 +54,35 @@ cards.on("click", ".card", function(evt){
   console.log(turn);
 
   if (turn==2){
+    // two cards are showing, so check for matches
     let matches = $(".show");
     firstCard = matches.children()[0].className;
     secondCard = matches.children()[1].className;
     console.log(firstCard);
     console.log(secondCard);
     if (firstCard==secondCard){
+      //compare classnames to detect match
       console.log("match");
       matches.addClass("match");
       if ($(".match").length==16){
+        //if there are 16 matched cards, you've won.
         console.log("you win")
       }
     }
     else {
       console.log("not a match");
     }
-    // TODO: add in red or wait or whatever
+    // TODO: add in red or wait or whatever... moves away too fast
     matches.removeClass("open show")
-    turn = turn%2;
+    turn = turn%2; //reset
 
     moves += 1;
-    moveText.text(moves);
+    moveText.text(moves);   //print the number of moves on screen
   }
 
 })
+
+$(".restart").click(function(evt){
+  // TODO: not sure if this is the best way to do this
+  location.reload();
+});
