@@ -38,8 +38,11 @@ function shuffle(array) {
  */
 
 const cards = $(".deck")
+const moveText = $(".moves")
+
 let turn = 0; // this will keep track of 1st vs 2nd card shown
 let moves = 0;  //this will keep track of moves made
+
 
 
 cards.on("click", ".card", function(evt){
@@ -67,6 +70,7 @@ cards.on("click", ".card", function(evt){
     turn = turn%2;
 
     moves += 1;
+    moveText.text(moves);
   }
 
 })
