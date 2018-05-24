@@ -61,6 +61,9 @@ cards.on("click", ".card", function(evt){
     if (firstCard==secondCard){
       console.log("match");
       matches.addClass("match");
+      if ($(".match").length==16){
+        console.log("you win")
+      }
     }
     else {
       console.log("not a match");
