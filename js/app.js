@@ -36,3 +36,37 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+const cards = $(".deck")
+let turn = 0; // this will keep track of 1st vs 2nd card shown
+let moves = 0;  //this will keep track of moves made
+
+
+cards.on("click", ".card", function(evt){
+  evt.preventDefault();
+  let card = $(evt.target);
+  card.addClass("open show")
+  turn += 1;
+  console.log(turn);
+
+  if (turn==2){
+    let matches = $(".show");
+    firstCard = matches.children()[0].className;
+    secondCard = matches.children()[1].className;
+    console.log(firstCard);
+    console.log(secondCard);
+    if (firstCard==secondCard){
+      console.log("match");
+      matches.addClass("match");
+    }
+    else {
+      console.log("not a match");
+    }
+    // TODO: add in red or wait or whatever
+    matches.removeClass("open show")
+    turn = turn%2;
+
+    moves += 1;
+  }
+
+})
