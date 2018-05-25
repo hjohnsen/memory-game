@@ -107,3 +107,12 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+#winModal {
+  display: none;
+  z-index: 1;
+  position: fixed;
+  background-color: #e9d0ef;
+  padding: 2em;
+  text-align: center;
+}

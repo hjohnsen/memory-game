@@ -70,6 +70,16 @@ cards.on("click", ".card", function(evt){
       if ($(".match").length==16){
         //if there are 16 matched cards, you've won.
         console.log("you win")
+        modal = $("#winModal")[0];
+        let starMessage;
+        if (starHolder.children().length==1){
+          starMessage = "1 star";
+        }
+        else {
+          starMessage = starHolder.children().length + " stars";
+        }
+        $(".starCount").text(starMessage);
+        modal.style.display = "block";
       }
     }
     else {
