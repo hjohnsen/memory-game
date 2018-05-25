@@ -30,17 +30,10 @@ cardList = shuffle(cardList.concat(cardList)); //get each twice, shuffles
 
 const cards = $(".deck") //all the cards will be in this list
 
-
-
 for (let card of cardList) {
   let code = "<li class='card'> <i class='fa fa-" + card + "'></i></li>"
   cards.append(code)
 }
-
-
-
-
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -55,30 +48,23 @@ for (let card of cardList) {
 
 
 const moveText = $(".moves") //where the #moves gets printed
+const starHolder = $(".stars")  //list with stars
 
-let turn = 0; // this will keep track of 1st vs 2nd card shown
 let moves = 0;  //this will keep track of moves made
-
-
 
 cards.on("click", ".card", function(evt){
   //when a card is clicked on:
   evt.preventDefault();
   let card = $(evt.target);
   card.addClass("open show")
-  turn += 1;
-  console.log(turn);
 
-  if (turn==2){
+  let matches = $(".show");
+  if (matches.length==2){
     // two cards are showing, so check for matches
-    let matches = $(".show");
     firstCard = matches.children()[0].className;
     secondCard = matches.children()[1].className;
-    console.log(firstCard);
-    console.log(secondCard);
     if (firstCard==secondCard){
-      //compare classnames to detect match
-      console.log("match");
+      //if classnames are the same, it's a match
       matches.addClass("match");
       matches.removeClass("open show")
       if ($(".match").length==16){
@@ -88,13 +74,14 @@ cards.on("click", ".card", function(evt){
     }
     else {
       setTimeout(function(){matches.removeClass("open show")}, 500);
-
     }
-    // TODO: add in red or wait or whatever... moves away too fast
-
-    turn = turn%2; //reset
+    // TODO: add in red or wait or whatever
 
     moves += 1;
+    if (moves%10==0 && starHolder.children().length>0) {
+      //decrement stars every 10 moves
+      starHolder.children().last().remove()
+    }
     moveText.text(moves);   //print the number of moves on screen
   }
 
