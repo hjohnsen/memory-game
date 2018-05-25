@@ -1,7 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-
+let cardList = ["diamond", "paper-plane-o", "anchor", "bolt",
+    "cube", "leaf", "bicycle", "bomb"];
+cardList = shuffle(cardList.concat(cardList)); #get each twice, shuffle
 
 /*
  * Display the cards on the page
@@ -64,16 +66,18 @@ cards.on("click", ".card", function(evt){
       //compare classnames to detect match
       console.log("match");
       matches.addClass("match");
+      matches.removeClass("open show")
       if ($(".match").length==16){
         //if there are 16 matched cards, you've won.
         console.log("you win")
       }
     }
     else {
-      console.log("not a match");
+      setTimeout(function(){matches.removeClass("open show")}, 500);
+
     }
     // TODO: add in red or wait or whatever... moves away too fast
-    matches.removeClass("open show")
+
     turn = turn%2; //reset
 
     moves += 1;
