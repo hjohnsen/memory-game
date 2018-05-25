@@ -58,6 +58,7 @@ let elapsedTime = 0;  //this will keep track of seconds elapsed
 
 cards.on("click", ".card", function(evt){
   //when a card is clicked on:
+  if(evt.target != this) return;  //stops bug when symbol clicked on
   evt.preventDefault();
   if(inTimeOut==false) {
     let card = $(evt.target);
@@ -110,7 +111,7 @@ cards.on("click", ".card", function(evt){
     //this just keeps time in seconds
     elapsedTime++;
     timer.text(elapsedTime);
-    console.log(elapsedTime);
+    //console.log(elapsedTime);
   }, 1000);
 
   $(".restart").click(function(evt){
