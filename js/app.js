@@ -50,64 +50,70 @@ for (let card of cardList) {
 const moveText = $(".moves"); //where the #moves gets printed
 const starHolder = $(".stars");  //list with stars
 const timer = $(".timer"); //timer printout
+let inTimeOut = false;
 
 let moves = 0;  //this will keep track of moves made
 let elapsedTime = 0;  //this will keep track of seconds elapsed
 
+
 cards.on("click", ".card", function(evt){
   //when a card is clicked on:
   evt.preventDefault();
-  let card = $(evt.target);
-  card.addClass("open show");
+  if(inTimeOut==false) {
+    let card = $(evt.target);
+    card.addClass("open show");
 
-  let matches = $(".show");
-  if (matches.length==2){
-    // two cards are showing, so check for matches
-    firstCard = matches.children()[0].className;
-    secondCard = matches.children()[1].className;
-    if (firstCard==secondCard){
-      //if classnames are the same, it's a match
-      matches.addClass("match");
-      matches.removeClass("open show");
-      if ($(".match").length==16){
-        //if there are 16 matched cards, you've won.
-        clearTimeout(timerFunction); //stop timer
-        modal = $("#winModal")[0];
-        let starMessage;
-        if (starHolder.children().length==1){
-          starMessage = "1 star";
+    let matches = $(".show");
+    if (matches.length==2){
+      // two cards are showing, so check for matches
+      firstCard = matches.children()[0].className;
+      secondCard = matches.children()[1].className;
+      if (firstCard==secondCard){
+        //if classnames are the same, it's a match
+        matches.addClass("match");
+        matches.removeClass("open show");
+        if ($(".match").length==16){
+          //if there are 16 matched cards, you've won.
+          clearTimeout(timerFunction); //stop timer
+          modal = $("#winModal")[0];
+          let starMessage;
+          if (starHolder.children().length==1){
+            starMessage = "1 star";
+          }
+          else {
+            starMessage = starHolder.children().length + " stars";
+          }
+          $(".starCount").text(starMessage);
+          modal.style.display = "block";
         }
-        else {
-          starMessage = starHolder.children().length + " stars";
+      }
+      else {
+        //pauses for half a second before turning over
+        inTimeOut = true;
+        setTimeout(function(){
+          matches.removeClass("open show");
+          inTimeOut = false;}, 500);
         }
-        $(".starCount").text(starMessage);
-        modal.style.display = "block";
+        // TODO: add in red or wait or whatever
+
+        moves += 1;
+        if (moves%10==0 && starHolder.children().length>1) {
+          //decrement stars every 10 moves
+          starHolder.children().last().remove();
+        }
+        moveText.text(moves);   //print the number of moves on screen
       }
     }
-    else {
-      //pauses for half a second before turning over
-      setTimeout(function(){matches.removeClass("open show")}, 500);
-    }
-    // TODO: add in red or wait or whatever
+  })
 
-    moves += 1;
-    if (moves%10==0 && starHolder.children().length>0) {
-      //decrement stars every 10 moves
-      starHolder.children().last().remove();
-    }
-    moveText.text(moves);   //print the number of moves on screen
-  }
+  var timerFunction = setInterval(function(){
+    //this just keeps time in seconds
+    elapsedTime++;
+    timer.text(elapsedTime);
+    console.log(elapsedTime);
+  }, 1000);
 
-})
-
-var timerFunction = setInterval(function(){
-  //this just keeps time in seconds
-  elapsedTime++;
-  timer.text(elapsedTime);
-  console.log(elapsedTime);
-}, 1000);
-
-$(".restart").click(function(evt){
-  // TODO: not sure if this is the best way to do this
-  location.reload();
-});
+  $(".restart").click(function(evt){
+    // TODO: not sure if this is the best way to do this
+    location.reload();
+  });
