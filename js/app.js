@@ -1,17 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
-let cardList = ["diamond", "paper-plane-o", "anchor", "bolt",
-    "cube", "leaf", "bicycle", "bomb"];
-cardList = shuffle(cardList.concat(cardList)); #get each twice, shuffle
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -27,6 +13,34 @@ function shuffle(array) {
     return array;
 }
 
+/*
+ * Create a list that holds all of your cards
+ */
+let cardList = ["diamond", "paper-plane-o", "anchor", "bolt",
+    "cube", "leaf", "bicycle", "bomb"];
+
+cardList = shuffle(cardList.concat(cardList)); //get each twice, shuffles
+
+/*
+ * Display the cards on the page
+ *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - loop through each card and create its HTML
+ *   - add each card's HTML to the page
+ */
+
+const cards = $(".deck") //all the cards will be in this list
+
+
+
+for (let card of cardList) {
+  let code = "<li class='card'> <i class='fa fa-" + card + "'></i></li>"
+  cards.append(code)
+}
+
+
+
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -39,7 +53,7 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const cards = $(".deck") //all the cards are in this list
+
 const moveText = $(".moves") //where the #moves gets printed
 
 let turn = 0; // this will keep track of 1st vs 2nd card shown
